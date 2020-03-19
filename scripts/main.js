@@ -31,7 +31,7 @@ function updateDay(){
     date.setDate(date.getDate() + 1)
     transformCSVcases()
     options = {
-        title: 'COVID129 Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear()
+        title: 'COVID19 Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear()
       };
     chart.draw(data, options);
     
