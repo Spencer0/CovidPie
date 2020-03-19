@@ -43,7 +43,7 @@ function updateDay(){
     chart.draw(data, options);
     
 
-    if(date.getTime() < new Date(2020,3,1).getTime()){
+    if(date.getTime() < new Date().getTime()){
         setTimeout(function () {
             updateDay()
           }, 500);
