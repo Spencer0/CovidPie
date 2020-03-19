@@ -51,7 +51,7 @@ function updateDay(){
 }
 
 function loadCSVcases(){
-    d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march18.csv").then(function(data) {
+    d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march19.csv").then(function(data) {
         csvData = data;
         transformCSVcases()
     });
