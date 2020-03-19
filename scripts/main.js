@@ -16,7 +16,7 @@ function drawChart() {
       ]); 
   }
   options = {
-    title: 'COVID129 Cases ' + date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
+    title: 'COVID19 Cases ' + date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
   };
   chart = new google.visualization.PieChart(document.getElementById('piechart'));
   chart.draw(data, options);
@@ -26,10 +26,6 @@ function drawChart() {
   loadCSVcases()
 }
 
-
-document.getElementById('next-day').onclick=function() {
-    updateDay()
-}
 
 function updateDay(){
     date.setDate(date.getDate() + 1)
