@@ -20,7 +20,7 @@ function drawChart() {
     is3D: true,
     pieSliceText: 'label',
     sliceVisibilityThreshold: .025,
-    colors: ['#aaaaaa', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+    colors: ['darkred', 'red', 'orangered', 'tomato', 'coral', 'darkorange', 'orange']
   };
   chart = new google.visualization.PieChart(document.getElementById('piechart'));
   chart.draw(data, options);
