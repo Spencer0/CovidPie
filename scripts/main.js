@@ -9,14 +9,18 @@ var options;
 var csvData;
 
 function drawChart() {
-  date = new Date(2020, 0, 1)
+  date = new Date(2020, 1, 20)
   if(!data){
     data = google.visualization.arrayToDataTable([
         ['Country', 'Total Cases'],
       ]); 
   }
   options = {
-    title: 'COVID19 Cases ' + date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
+    title: 'COVID19 Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
+    is3D: true,
+    pieSliceText: 'label',
+    sliceVisibilityThreshold: .025,
+    colors: ['#aaaaaa', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
   };
   chart = new google.visualization.PieChart(document.getElementById('piechart'));
   chart.draw(data, options);
@@ -26,12 +30,15 @@ function drawChart() {
   loadCSVcases()
 }
 
-
 function updateDay(){
     date.setDate(date.getDate() + 1)
     transformCSVcases()
     options = {
-        title: 'COVID19 Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear()
+        title: 'COVID19 Total Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
+        is3D: true,
+        pieSliceText: 'label',
+        sliceVisibilityThreshold: .001,
+        colors: ['#aaaaaa', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
       };
     chart.draw(data, options);
     
@@ -43,17 +50,12 @@ function updateDay(){
     }
 }
 
-//returns 2d array
-//[["Country", CaseTotal]
-
 function loadCSVcases(){
     d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march18.csv").then(function(data) {
         csvData = data;
         transformCSVcases()
     });
 }
-
-
 
 function transformCSVcases(){
     totalCounter = {}
@@ -73,6 +75,13 @@ function transformCSVcases(){
     for (var country in totalCounter) {
         newData.push([country, totalCounter[country]])
       }
+      console.log(newData)
+      newData = newData.sort(function(a,b){
+        if(a[1] >= b[1]) {return -1}
+        if(a[1] === b[1]){return 0}
+        if(a[1] <= b[1]){return 1}
+
+      })
       console.log(newData)
       newData.splice(0,0,['Country', 'Total Cases'] )
       data = google.visualization.arrayToDataTable(newData); 
