@@ -61,7 +61,7 @@ function transformCSVcases(){
     totalCounter = {}
     //Day, Country, Total Cases
     csvData.forEach(function(tuple){
-        if(new Date(tuple.Date).getTime() < date.getTime()){
+        if(new Date(tuple.DateRep).getTime() < date.getTime()){
             if(totalCounter[tuple["Countries and territories"]]){
                 totalCounter[tuple["Countries and territories"]] += parseInt(tuple["Cases"])
             }
