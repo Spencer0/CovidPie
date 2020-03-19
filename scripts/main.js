@@ -37,8 +37,8 @@ function updateDay(){
         title: 'COVID19 Total Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
         is3D: true,
         pieSliceText: 'label',
-        sliceVisibilityThreshold: .001,
-        colors: ['#aaaaaa', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+        sliceVisibilityThreshold: .01,
+        colors: ['darkred', 'red', 'orangered', 'tomato', 'coral', 'darkorange', 'orange']
       };
     chart.draw(data, options);
     
@@ -71,6 +71,21 @@ function transformCSVcases(){
         }
         
       });
+    //Data clean
+    totalCounter['South Korea'] = totalCounter['South_Korea']
+    totalCounter['South_Korea'] = 0
+    totalCounter['USA'] = totalCounter['United_States_of_America']
+    totalCounter['United_States_of_America'] = 0
+    totalCounter['United Kingdom'] = totalCounter['United_Kingdom']
+    totalCounter['United_Kingdom'] = 0
+    totalCounter['Diamond Princess'] = totalCounter['Cases_on_an_international_conveyance_Japan']
+    totalCounter['Cases_on_an_international_conveyance_Japan'] = 0
+    totalCounter['Czech Republic'] = totalCounter['Czech_Republic']
+    totalCounter['Czech_Republic'] = 0
+
+
+
+
     newData = []
     for (var country in totalCounter) {
         newData.push([country, totalCounter[country]])
