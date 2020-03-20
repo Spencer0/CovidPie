@@ -1,15 +1,14 @@
-google.charts.load('current', {'packages':['corechart']});
 
-google.charts.setOnLoadCallback(drawChart);
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawPieChart);
 
 var data;
 var chart;
-var date; 
+var date = new Date(2020, 0, 20); 
 var options; 
 var csvData;
 
-function drawChart() {
-  date = new Date(2020, 1, 20)
+function drawPieChart() {
   if(!data){
     data = google.visualization.arrayToDataTable([
         ['Country', 'Total Cases'],
@@ -19,7 +18,7 @@ function drawChart() {
     title: 'COVID19 Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
     is3D: true,
     pieSliceText: 'label',
-    sliceVisibilityThreshold: .025,
+    sliceVisibilityThreshold: .2,
     colors: ['darkred', 'red', 'orangered', 'tomato', 'coral', 'darkorange', 'orange']
   };
   chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -31,15 +30,20 @@ function drawChart() {
 }
 
 function updateDay(){
+
+
     date.setDate(date.getDate() + 1)
+
     transformCSVcases()
+
     options = {
         title: 'COVID19 Total Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
         is3D: true,
         pieSliceText: 'label',
         sliceVisibilityThreshold: .01,
         colors: ['darkred', 'red', 'orangered', 'tomato', 'coral', 'darkorange', 'orange']
-      };
+    };
+
     chart.draw(data, options);
     
 
@@ -51,7 +55,7 @@ function updateDay(){
 }
 
 function loadCSVcases(){
-    d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march19.csv").then(function(data) {
+    d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march20.csv").then(function(data) {
         csvData = data;
         transformCSVcases()
     });
@@ -71,6 +75,8 @@ function transformCSVcases(){
         }
         
       });
+
+
     //Data clean
     totalCounter['South Korea'] = totalCounter['South_Korea']
     totalCounter['South_Korea'] = 0
@@ -85,7 +91,6 @@ function transformCSVcases(){
 
 
 
-
     newData = []
     for (var country in totalCounter) {
         newData.push([country, totalCounter[country]])
@@ -97,7 +102,6 @@ function transformCSVcases(){
         if(a[1] <= b[1]){return 1}
 
       })
-      console.log(newData)
       newData.splice(0,0,['Country', 'Total Cases'] )
       data = google.visualization.arrayToDataTable(newData); 
       chart.draw(data, options);
