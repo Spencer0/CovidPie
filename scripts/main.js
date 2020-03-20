@@ -4,7 +4,7 @@ google.charts.setOnLoadCallback(drawPieChart);
 
 var data;
 var chart;
-var date = new Date(2020, 0, 20); 
+var date = new Date(2020, 1, 20); 
 var options; 
 var csvData;
 
@@ -15,7 +15,7 @@ function drawPieChart() {
       ]); 
   }
   options = {
-    title: 'COVID19 Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
+    title: 'COVID19 Total Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
     is3D: true,
     pieSliceText: 'label',
     sliceVisibilityThreshold: .2,
