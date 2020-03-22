@@ -21,7 +21,7 @@ function drawPieChart() {
     sliceVisibilityThreshold: .2,
     colors: ['darkred', 'red', 'orangered', 'tomato', 'coral', 'darkorange', 'orange']
   };
-  chart = new google.visualization.ColumnChart(document.getElementById('piechart'));
+  chart = new google.visualization.PieChart(document.getElementById('piechart'));
   chart.draw(data, options);
   setTimeout(function () {
     updateDay()
@@ -55,7 +55,7 @@ function updateDay(){
 }
 
 function loadCSVcases(){
-    d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march21.csv").then(function(data) {
+    d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march22.csv").then(function(data) {
         csvData = data;
         transformCSVcases()
     });
