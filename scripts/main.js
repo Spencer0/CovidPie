@@ -21,7 +21,7 @@ function drawPieChart() {
     sliceVisibilityThreshold: .2,
     colors: ['darkred', 'red', 'orangered', 'tomato', 'coral', 'darkorange', 'orange']
   };
-  chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart = new google.visualization.BarChart(document.getElementById('piechart'));
   chart.draw(data, options);
   setTimeout(function () {
     updateDay()
