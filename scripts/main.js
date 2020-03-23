@@ -80,12 +80,12 @@ function drawChart() {
 }
 
 function incrementDay(loop = false){
-  if(date >= new Date('3/22/2020')){return}
+  if(date >= maxDate){return}
     date.setDate(date.getDate() + 1)
     document.getElementById("dateSlider").value = parseInt(document.getElementById("dateSlider").value) + 1
     drawChart()
     if(loop){
-      if(date < new Date('3/22/2020')){
+      if(date < maxDate){
         setTimeout(function () {
           incrementDay(true)
         }, 500);
@@ -94,7 +94,7 @@ function incrementDay(loop = false){
 }
 
 function extractAndTransformCSVcases(){
-    d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march22.csv").then(function(data) {
+    d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march23.csv").then(function(data) {
         csvData = data;
         transformCSVcases()
     });
@@ -109,10 +109,10 @@ function transformCSVcases(){
 
     //N^bazillion algo, runs only once
     let placeholderDate = new Date('1/25/2020')
-    let endDate = new Date('3/23/2020') 
+    let endDate = maxDate
     let runningTotalCounter = {}
     let runningDeathTotalCounter = {}
-    while(placeholderDate.getTime() < endDate.getTime()){
+    while(placeholderDate.getTime() <= endDate.getTime()){
       let newCasesCounter = {}
       let newDeathCounter = {}
       csvData.forEach(function(tuple){
@@ -259,8 +259,9 @@ function dateSliderInputEvent(e){
 
 
 function forwardButtonClickEvent(){
-  if(date >= new Date('3/22/2020')){ return; } 
-  incrementDay();
+  if(date.getTime() < maxDate.getTime()){ 
+    incrementDay();
+   } 
 }
 
 function backwardButtonClickEvent(){
