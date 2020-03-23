@@ -1,5 +1,28 @@
+.background{
+    background-color: rgb(51, 51, 51);
+}
+
+.border{
+    border: black solid 1px;
+}
 .fa{
     padding-left: 25px;
+}
+#graph-options{
+    font-size: 30px;
+    background-color: rgb(233, 151, 151);
+}
+.drop-downs{
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    padding: 4px;
+    top: -7px;
+    position: relative;;
+
+    
+}
+.last-drop-down{
+    margin-right: 25px;
 }
 .slidecontainer {
     width: 100%; /* Width of the outside container */

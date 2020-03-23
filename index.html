@@ -13,42 +13,36 @@
 
 </head>
 
-<body>
-  <center>
-    <span class="control-bar">
-      <i onclick="backwardButtonClickEvent()" class="fa fa-2x fa-backward"></i>
-      <i onclick="playButtonClickEvent()" class="fa fa-2x fa-play"></i>
-      <i onclick="forwardButtonClickEvent()" class="fa fa-2x fa-forward"></i>
-    </span>
-    <br>
-    <span class="slidecontainer">
-      <input onchange="dateSliderInputEvent(value)" type="range" min="1" max="100" value="50" class="slider" id="dateSlider">
-    </span>
-    <span id="slider-value">
-    </span>
-    <br>
-
-    <select onchange="chartTypeInputEvent(value)" id="data-type" >
-      <option default value="totalCases">Cases</option>
-      <option value="totalDeaths">Deaths</option>
-      <option value="newDeaths">New Deaths</option>
-      <option value="newCases">New Cases</option>
-    </select>
-    <select onchange="chartStyleInputEvent(value)" id="graph-type">
-      <option value="PieChart">Pie</option>
-      <option value="ColumnChart">Column</option>
-      <option value="BarChart">Bar</option>
-    </select>
-    
-
-
-    
+  <body class="background">
+    <center>
+      <span class='border' id='graph-options'>  
+        <span class="control-bar">
+          <i onclick="backwardButtonClickEvent()" class="fa fa-md fa-backward"></i>
+          <i onclick="playButtonClickEvent()" class="fa fa-md fa-play"></i>
+          <i onclick="forwardButtonClickEvent()" class="fa fa-md fa-forward"></i>
+        </span>
+        <span class="slidecontainer">
+          <input onchange="dateSliderInputEvent(value)" type="range" min="1" max="100" value="50" class="slider" id="dateSlider">
+        </span>
+        <span id="slider-value">
+        </span>
+        <select class="drop-downs" onchange="chartTypeInputEvent(value)" id="data-type" >
+          <option default value="totalCases">Cases</option>
+          <option value="totalDeaths">Deaths</option>
+          <option value="newDeaths">New Deaths</option>
+          <option value="newCases">New Cases</option>
+        </select>
+        <select class="drop-downs last-drop-down" onchange="chartStyleInputEvent(value)" id="graph-type">
+          <option value="PieChart">Pie</option>
+          <option value="ColumnChart">Column</option>
+          <option value="BarChart">Bar</option>
+          <option value="Histogram">Histogram</option>
+        </select>
+      </span>
+      <div class='' id="piechart"></div>
+    </center>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <div id="piechart" style="width: 1200px; height: 800px;"></div>
-  <script src="scripts/main.js"></script>
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-
-
-</center>
-</body>
+    <script src="scripts/main.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </body>
 </html>

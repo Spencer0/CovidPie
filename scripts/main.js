@@ -6,12 +6,20 @@ google.charts.setOnLoadCallback(init);
 var data;
 var chart;
 var calender;
+var minDate = new Date('1/25/2020'); 
+var maxDate = new Date('3/23/2020')
 var date = new Date('1/25/2020'); 
 var options; 
 var csvData;
 var dataTypeSelection = 'PieChart';
 var chartTypeSelection = 'totalCases';
 var totalDays;
+
+var TitleTranslator = {'totalCases': "Total Cases", 
+                       'totalDeaths': "Total Deaths", 
+                       'newDeaths': "New Deahts",
+                        'newCases': "New Cases"
+                      }
 
 //Init Function
 //Does all the data transformation that will need to be done
@@ -43,48 +51,28 @@ function finishInit(){
   drawChart()
 }
 
-function dateSliderInputEvent(e){
-  console.log("Updated date", e)
-  //Create new date object using the input value
-  var userDate = new Date('1/25/2020')
-  userDate.setDate(userDate.getDate() + parseInt(e))
-  //Set current = to it, and redraw
-  //Current date member variable to interger 
-  console.log(date.getMonth() + "/" +date.getDate(), userDate.getMonth() + "/" +userDate.getDate())
-  
-  date = userDate
-  drawChart()
-}
 
-function setOptions(){
+function updateOptions(){
   options = {
-    title: 'COVID19 Total Cases ' + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
-    chartArea:{left:350,top:0},
+    title: 'COVID19 ' + TitleTranslator[chartTypeSelection] + " " + (parseInt(date.getMonth()) + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
     is3D: true,
     pieSliceText: 'label',
+    height: 800,
+    width: 1200,
     sliceVisibilityThreshold: .01,
     colors: ['darkred', 'red', 'orangered', 'tomato', 'coral', 'darkorange', 'orange']
   };
 }
 
-function forwardButtonClickEvent(){
-  if(date >= new Date('3/22/2020')){ return; } 
-  incrementDay();
-}
-
-function backwardButtonClickEvent(){
-  if(date <= new Date('1/25/2020')){ return; } 
-  document.getElementById("dateSlider").value = parseInt(document.getElementById("dateSlider").value) - 1
-  date.setDate(date.getDate() - 1)
-  drawChart()
-}
 function drawChart() {
-  setOptions()
-  document.getElementById('slider-value').innerHTML = (parseInt(date.getMonth()) + 1) + " / " + date.getDate();
+  updateOptions()
+  document.getElementById('slider-value').innerHTML = "<b>"  + (parseInt(date.getMonth()) + 1) + " / " + date.getDate() +"</b>";
   if(dataTypeSelection == 'PieChart'){
     chart = new google.visualization.PieChart(document.getElementById('piechart'));
   }else if(dataTypeSelection == 'BarChart'){
     chart = new google.visualization.BarChart(document.getElementById('piechart'));
+  }else if(dataTypeSelection == 'Histogram'){
+    chart = new google.visualization.Histogram(document.getElementById('piechart'));
   }else{
     chart = new google.visualization.ColumnChart(document.getElementById('piechart'));
   }
@@ -92,6 +80,7 @@ function drawChart() {
 }
 
 function incrementDay(loop = false){
+  if(date >= new Date('3/22/2020')){return}
     date.setDate(date.getDate() + 1)
     document.getElementById("dateSlider").value = parseInt(document.getElementById("dateSlider").value) + 1
     drawChart()
@@ -170,11 +159,17 @@ function transformCSVcases(){
       todaysTotalDeaths = []
       for(country in totalDeathsObjectClone){
         todaysTotalDeaths.push([country, totalDeathsObjectClone[country]])
+        if(todaysTotalDeaths[country] <= 0){
+          todaysTotalDeaths[country] = 0
+        }
       }
 
       todaysTotalCases = []
       for(country in totalCasesObjectClone){
         todaysTotalCases.push([country, totalCasesObjectClone[country]])
+        if(todaysTotalCases[country] <= 0){
+          delete todaysTotalCases.country
+        }
       }
 
 
@@ -218,6 +213,7 @@ function transformCSVcases(){
       placeholderDate.setDate(placeholderDate.getDate() + 1)
       totalDays++
     }
+    totalDays = totalDays - 1
     data = calender[date.getTime()]['totalCases']
     console.log(calender, totalDays)
     finishInit()
@@ -242,3 +238,34 @@ function playButtonClickEvent(){
   incrementDay(true)
 }
 
+
+function dateSliderInputEvent(e){
+  console.log("Updated date", e)
+  //Create new date object using the input value
+  var userDate = new Date('1/25/2020')
+  userDate.setDate(userDate.getDate() + parseInt(e))
+  
+  if(userDate > new Date('3/22/2020') || userDate < new Date('1/25/2020') ) { 
+    console.log("big slider")
+    return
+   }
+  //Set current = to it, and redraw
+  //Current date member variable to interger 
+  console.log(date.getMonth() + "/" +date.getDate(), userDate.getMonth() + "/" +userDate.getDate())
+  
+  date = userDate
+  drawChart()
+}
+
+
+function forwardButtonClickEvent(){
+  if(date >= new Date('3/22/2020')){ return; } 
+  incrementDay();
+}
+
+function backwardButtonClickEvent(){
+  if(date <= new Date('1/25/2020')){ return; } 
+  document.getElementById("dateSlider").value = parseInt(document.getElementById("dateSlider").value) - 1
+  date.setDate(date.getDate() - 1)
+  drawChart()
+}
