@@ -7,7 +7,7 @@ var data;
 var chart;
 var calender;
 var minDate = new Date('1/25/2020'); 
-var maxDate = new Date('3/23/2020')
+var maxDate = new Date('3/27/2020')
 var date = new Date('1/25/2020'); 
 var options; 
 var csvData;
@@ -94,7 +94,7 @@ function incrementDay(loop = false){
 }
 
 function extractAndTransformCSVcases(){
-    d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march23.csv").then(function(data) {
+    d3.csv("https://raw.githubusercontent.com/Spencer0/CovidPie/master/data/march27.csv").then(function(data) {
         csvData = data;
         transformCSVcases()
     });
